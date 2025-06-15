@@ -1,0 +1,14 @@
+{
+  // ① New key (2025-) – the one Copilot now respects
+  "github.copilot.editor.enableAutoCompletions": false,
+
+  // ② Old key kept for backward compatibility
+  "github.copilot.inlineSuggest.enable": false,
+
+  // ③ Leave Chat & Agent on (default = true, but explicit never hurts)
+  "github.copilot.chat.enable": true,
+  "chat.agent.enabled": true,
+  "files.associations": {
+    "iostream": "cpp"
+  }
+}

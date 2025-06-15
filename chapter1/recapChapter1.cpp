@@ -19,7 +19,7 @@ int main()
 
     // Comments: Ignored by the compiler, essential for human readability and explaining code.
     /* This is a multi-line comment.
-     * Anything between /* and */ is treated as a comment.
+     * Anything between slash-asterisk and asterisk-slash is treated as a comment.
      * Comments are very useful to explain in English what the program does.
      */
     // This is a single-line comment. Anything after // to the end of the line is a comment.
@@ -85,19 +85,19 @@ int main()
 
     // Arrays: Store a fixed-size sequence of elements of the same type.
     // C++ uses ZERO-BASED INDEXING: the first element is at index 0, the last at index (size - 1).
-    int my_array; // Declares an integer array with 3 elements (indices 0, 1, 2)
-    my_array = 10;
-    my_array = 20;
-    my_array = 30;
-    std::cout << "Array elements: " << my_array << ", " << my_array << ", " << my_array << "\n";
+    int my_array[3]; // Declares an integer array with 3 elements (indices 0, 1, 2)
+    my_array[0] = 10;
+    my_array[1] = 20;
+    my_array[2] = 30;
+    std::cout << "Array elements: " << my_array[0] << ", " << my_array[1] << ", " << my_array[2] << "\n";
 
     // Arrays can be initialized at declaration using curly braces.
-    double coordinates = {1.5, 2.8};
-    std::cout << "Coordinates: (" << coordinates << ", " << coordinates << ")\n";
+    double coordinates[2] = {1.5, 2.8};
+    std::cout << "Coordinates: (" << coordinates[0] << ", " << coordinates[1] << ")\n";
 
     // Multi-dimensional Arrays (Matrices): Declared with multiple sets of square brackets.
-    int matrix = {{1, 2}, {3, 4}}; // A 2x2 matrix
-    std::cout << "Matrix element : " << matrix << ",: " << matrix << "\n";
+    int matrix[2][2] = {{1, 2}, {3, 4}}; // A 2x2 matrix
+    std::cout << "Matrix element [0][0]: " << matrix[0][0] << ", [1][1]: " << matrix[1][1] << "\n";
 
     // ASCII Characters: 'char' type stores a single character. Single quotes are used.
     char grade = 'A';
