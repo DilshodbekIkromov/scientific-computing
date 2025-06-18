@@ -33,8 +33,47 @@ int main(int argc, char* argv[])
         for (int j = 0; j < 3; j++) {
             y[i] += A[i][j] * u[j];
         }
-        cout << y[i] << " ";
+        // cout << y[i] << " ";
     }
+
+    double z[3];
+    for (int i=0; i<3; i++){
+        z[i] = 0.0;
+        for (int j=0; j<3; j++){
+            z[i] += A[i][j]*u[i];
+        }
+        z[i] -= v[i];
+        // cout << z[i] << " ";
+    }
+
+    double C[3][3];
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            C[i][j] = 4 * A[i][j] - 3 * B[i][j];
+            // cout << C[i][j] << " ";
+        }
+        // cout << endl;
+    }
+
+    double D[3][3];
+    for  (int i=0; i<3; i++){
+        for (int j=0; j<3; j++){
+            D[i][j] = 0.0;
+        }
+    }
+    // we make triple loop: D_ij = sum_k A_ik · B_kj
+    for (int i=0; i<3; i++){
+        for (int j=0; j<3; j++){
+            for (int k=0; k<3; k++){
+                D[i][j] += A[i][k]*B[k][j];
+            }
+            cout << D[i][j] << " ";
+        }
+        cout << endl;
+    }    
+
+
+
 
 
 
