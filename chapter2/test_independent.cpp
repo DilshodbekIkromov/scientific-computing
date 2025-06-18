@@ -1,9 +1,8 @@
 #include <iostream>
-
+using namespace std;
 // This is a simple test file to demonstrate independent compilation
-int main() {
-    std::cout << "This is an independent C++ file in Chapter 2\n";
-    std::cout << "Each file can be compiled and run separately\n";
-    
-    return 0;
+
+int main(){
+    if (1==1) 
+        cout << "Hello it is in one line if statement" << endl;
 }
