@@ -58,9 +58,19 @@ double& Matrix::operator()(int i, int j){
 }
 
 
+Matrix& Matrix::operator=(const Matrix& otherMatrix){
+    assert(mNumRows == otherMatrix.mNumRows);
+    assert(mNumCols == otherMatrix.mNumCols);
 
+    for (int i=0; i<mNumRows; i++){
+        for (int j = 0; j< mNumCols; j++){
+            mData[i][j] = otherMatrix.mData[i][j];
+        }
+    }
+    return *this;
+}
 
-
+// matrix hpp 22 line left 
 
 
 
