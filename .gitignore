@@ -45,3 +45,7 @@ obj/
 *.log
 *~
 .DS_Store
+
+# Uncomment the following lines if you want to exclude data output files:
+# *.dat
+# *.txt
