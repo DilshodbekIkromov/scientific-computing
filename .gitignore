@@ -1,0 +1,47 @@
+# Compiled Object Files
+*.o
+*.obj
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Executables without extensions in chapter directories
+chapter*/exercise*
+chapter*/recap*
+chapter*/ex[0-9]*
+chapter*/test_*
+chapter*/learning*
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.a
+*.lib
+
+# Temporary files
+*.tmp
+*.temp
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# VS Code user-specific files (keep the project configurations)
+.vscode/settings.json
+
+# Build directories
+build/
+bin/
+obj/
+
+# Other common artifacts
+*.log
+*~
+.DS_Store
