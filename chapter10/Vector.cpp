@@ -3,126 +3,125 @@
 #include <cassert>
 #include "Vector.hpp"
 
-// Copy constructor: creates a new vector by copying another vector
+// Vector implementation
+
+// copy constructor
 Vector::Vector(const Vector& otherVector){
     mSize = otherVector.GetSize();
-    mData = new double [mSize];  // allocate memory for new vector
+    mData = new double[mSize];
     for (int i=0; i<mSize; i++){
-        mData[i] = otherVector.mData[i];  // copy each element
+        mData[i] = otherVector.mData[i];
     }
 }
 
-// Constructor: creates a vector of given size, initialized to zero
+// create vector with given size
 Vector::Vector(int size){
-    assert(size > 0);  // ensure positive size
+    assert(size > 0);
     mSize = size;
-    mData = new double [mSize];  // allocate memory
+    mData = new double[mSize];
     for (int i=0; i<mSize; i++){
-        mData[i] = 0.0;  // initialize all elements to zero
+        mData[i] = 0.0;
     }
 }
 
-// Destructor: frees the allocated memory
+// destructor
 Vector::~Vector(){
     delete[] mData;
 }
 
-// Returns the size of the vector
+// number of entries
 int Vector::GetSize() const
 {
     return mSize;
 }
 
-// Access operator: returns reference to element at index i (0-based)
+// element access (0-based)
 double& Vector::operator[](int i){
-    assert(i > -1);    // check lower bound
-    assert(i < mSize); // check upper bound
+    assert(i > -1);
+    assert(i < mSize);
     return mData[i];
 }
 
-// Read-only access: returns copy of element at index i (0-based)
+// read element
 double Vector::Read(int i) const {
-    assert(i > -1 );   // check lower bound
-    assert(i < mSize); // check upper bound
+    assert(i > -1 );
+    assert(i < mSize);
     return mData[i];
 }
 
-// Access operator: returns reference to element at index i (1-based indexing)
+// element access (1-based)
 double& Vector::operator()(int i){
-    assert(i > 0);         // check lower bound (1-based)
-    assert(i < mSize+1);   // check upper bound (1-based)
-    return mData[i-1];     // convert to 0-based indexing
+    assert(i > 0);
+    assert(i < mSize+1);
+    return mData[i-1];
 }
 
-// Assignment operator: copies elements from another vector
+// assignment
 Vector& Vector::operator=(const Vector& otherVector){
-    assert(mSize == otherVector.mSize);  // vectors must be same size
+    assert(mSize == otherVector.mSize);
     for (int i=0; i<mSize; i++){
-        mData[i] = otherVector.mData[i];  // copy each element
+        mData[i] = otherVector.mData[i];
     }
-    return *this;  // return reference to this vector
+    return *this;
 }
 
-// Unary plus: returns a copy of the vector
+// unary plus
 Vector Vector::operator+() const{
     Vector v(mSize);
     for (int i=0; i<mSize; i++){
-        v[i] = mData[i];  // copy each element
+        v[i] = mData[i];
     }
-    return v;  // return the copy
+    return v;
 }
 
-// Unary minus: returns a vector with all elements negated
+// unary minus
 Vector Vector::operator-() const {
     Vector v(mSize);
     for (int i=0; i<mSize; i++){
-        v[i] = -mData[i];  // negate each element
-    }
-    return v;  // return the negated vector
-}
-
-// Vector addition: adds corresponding elements of two vectors
-Vector Vector::operator+(const Vector& v1) const{
-    assert(mSize == v1.mSize);  // vectors must be same size
-    Vector v(mSize);
-    for (int i=0; i<mSize; i++){
-        v[i] = mData[i] + v1.mData[i];  // add corresponding elements
+        v[i] = -mData[i];
     }
     return v;
 }
 
-// Vector subtraction: subtracts corresponding elements of two vectors
-Vector Vector::operator-(const Vector& v1) const { 
-    assert(mSize == v1.mSize);  // vectors must be same size
+// add vectors
+Vector Vector::operator+(const Vector& v1) const{
+    assert(mSize == v1.mSize);
     Vector v(mSize);
     for (int i=0; i<mSize; i++){
-        v[i] = mData[i] - v1.mData[i];  // subtract corresponding elements
+        v[i] = mData[i] + v1.mData[i];
     }
-    return v;  // return the result vector
+    return v;
 }
 
-// Scalar multiplication: multiplies each element by a scalar value
+// subtract vectors
+Vector Vector::operator-(const Vector& v1) const {
+    assert(mSize == v1.mSize);
+    Vector v(mSize);
+    for (int i=0; i<mSize; i++){
+        v[i] = mData[i] - v1.mData[i];
+    }
+    return v;
+}
+
+// multiply by scalar
 Vector Vector::operator*(double a) const {
     Vector v(mSize);
     for (int i=0; i<mSize; i++){
-        v[i] = a*mData[i];  // multiply each element by scalar
+        v[i] = a*mData[i];
     }
     return v;
 }
 
-// Calculate p-norm of the vector (default p=2 for Euclidean norm)
+// compute p-norm
 double Vector::CalculateNorm(int p) const{
     double sum = 0.0;
     for (int i=0; i<mSize; i++){
-        sum += pow(fabs(mData[i]), p);  // sum of |element|^p
+        sum += pow(fabs(mData[i]), p);
     }
-    return pow(sum, 1.0/p);  // return p-th root of sum
+    return pow(sum, 1.0/p);
 }
 
-// Friend function: returns the length (size) of the vector
+// friend function
 int length(const Vector& v){
     return v.mSize;
 }
-
-
-

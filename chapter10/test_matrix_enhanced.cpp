@@ -1,26 +1,19 @@
-/**
- * test_matrix_enhanced.cpp
- * 
- * Enhanced test program for the Matrix class with comprehensive testing including edge cases.
- * This program tests all functionality and potential error conditions.
- * 
- * Compile with:
- * g++ -o test_matrix_enhanced test_matrix_enhanced.cpp Matrix.cpp Vector.cpp
- */
-
 #include <iostream>
 #include <iomanip>
 #include <string>
 #include "Matrix.hpp"
 #include "Vector.hpp"
 
+// Extended tests for the Matrix class
+
 int testsPassed = 0;
 int testsFailed = 0;
 
 void PrintLine() {
-    std::cout << "=================================================================" << std::endl;
+    std::cout << "===========================================================" << std::endl;
 }
 
+// show section header
 void PrintSection(const std::string& title) {
     std::cout << std::endl;
     PrintLine();
@@ -29,13 +22,12 @@ void PrintSection(const std::string& title) {
 }
 
 void PrintMatrix(const Matrix& matrix, const std::string& name) {
-    std::cout << name << " (" << matrix.GetNumberOfRows() << "x" 
+    std::cout << name << " (" << matrix.GetNumberOfRows() << "x"
               << matrix.GetNumberOfColumns() << "):" << std::endl;
-    
     for (int i = 1; i <= matrix.GetNumberOfRows(); i++) {
         std::cout << "  ";
         for (int j = 1; j <= matrix.GetNumberOfColumns(); j++) {
-            std::cout << std::setw(8) << std::fixed << std::setprecision(2) 
+            std::cout << std::setw(8) << std::fixed << std::setprecision(2)
                       << const_cast<Matrix&>(matrix)(i, j) << " ";
         }
         std::cout << std::endl;
@@ -69,13 +61,9 @@ void TestResult(const std::string& testName, bool passed) {
 
 void TestConstructors() {
     PrintSection("TESTING CONSTRUCTORS");
-    
-    // Test basic constructor
     Matrix A(3, 4);
     bool test1 = (A.GetNumberOfRows() == 3) && (A.GetNumberOfColumns() == 4);
     TestResult("Basic constructor (3x4 matrix)", test1);
-    
-    // Test that elements are initialized to zero
     bool test2 = true;
     for (int i = 1; i <= 3; i++) {
         for (int j = 1; j <= 4; j++) {
@@ -87,13 +75,9 @@ void TestConstructors() {
         if (!test2) break;
     }
     TestResult("Elements initialized to zero", test2);
-    
-    // Fill matrix with test values
     A(1, 1) = 1.0; A(1, 2) = 2.0; A(1, 3) = 3.0; A(1, 4) = 4.0;
     A(2, 1) = 5.0; A(2, 2) = 6.0; A(2, 3) = 7.0; A(2, 4) = 8.0;
     A(3, 1) = 9.0; A(3, 2) = 10.0; A(3, 3) = 11.0; A(3, 4) = 12.0;
-    
-    // Test copy constructor
     Matrix B(A);
     bool test3 = (B.GetNumberOfRows() == 3) && (B.GetNumberOfColumns() == 4);
     for (int i = 1; i <= 3 && test3; i++) {
@@ -104,8 +88,6 @@ void TestConstructors() {
         }
     }
     TestResult("Copy constructor", test3);
-    
-    // Test assignment operator
     Matrix C(3, 4);
     C = A;
     bool test4 = true;
@@ -121,40 +103,28 @@ void TestConstructors() {
 
 void TestArithmeticOperations() {
     PrintSection("TESTING ARITHMETIC OPERATIONS");
-    
     Matrix A(2, 2);
     A(1, 1) = 1.0; A(1, 2) = 2.0;
     A(2, 1) = 3.0; A(2, 2) = 4.0;
-    
     Matrix B(2, 2);
     B(1, 1) = 5.0; B(1, 2) = 6.0;
     B(2, 1) = 7.0; B(2, 2) = 8.0;
-    
-    // Test addition
     Matrix C = A + B;
     bool test1 = TestEqual(C(1, 1), 6.0) && TestEqual(C(1, 2), 8.0) &&
                  TestEqual(C(2, 1), 10.0) && TestEqual(C(2, 2), 12.0);
     TestResult("Matrix addition", test1);
-    
-    // Test subtraction
     Matrix D = B - A;
     bool test2 = TestEqual(D(1, 1), 4.0) && TestEqual(D(1, 2), 4.0) &&
                  TestEqual(D(2, 1), 4.0) && TestEqual(D(2, 2), 4.0);
     TestResult("Matrix subtraction", test2);
-    
-    // Test scalar multiplication
     Matrix E = A * 3.0;
     bool test3 = TestEqual(E(1, 1), 3.0) && TestEqual(E(1, 2), 6.0) &&
                  TestEqual(E(2, 1), 9.0) && TestEqual(E(2, 2), 12.0);
     TestResult("Scalar multiplication", test3);
-    
-    // Test unary plus
     Matrix F = +A;
     bool test4 = TestEqual(F(1, 1), 1.0) && TestEqual(F(1, 2), 2.0) &&
                  TestEqual(F(2, 1), 3.0) && TestEqual(F(2, 2), 4.0);
     TestResult("Unary plus", test4);
-    
-    // Test unary minus
     Matrix G = -A;
     bool test5 = TestEqual(G(1, 1), -1.0) && TestEqual(G(1, 2), -2.0) &&
                  TestEqual(G(2, 1), -3.0) && TestEqual(G(2, 2), -4.0);
@@ -163,57 +133,42 @@ void TestArithmeticOperations() {
 
 void TestMatrixVectorOperations() {
     PrintSection("TESTING MATRIX-VECTOR OPERATIONS");
-    
-    // Test matrix * vector
     Matrix A(2, 3);
     A(1, 1) = 1.0; A(1, 2) = 2.0; A(1, 3) = 3.0;
     A(2, 1) = 4.0; A(2, 2) = 5.0; A(2, 3) = 6.0;
-    
     Vector v(3);
     v[0] = 1.0; v[1] = 2.0; v[2] = 3.0;
-    
     Vector result1 = A * v;
     bool test1 = TestEqual(result1.Read(0), 14.0) && TestEqual(result1.Read(1), 32.0);
     TestResult("Matrix * Vector", test1);
-    
-    // Test vector * matrix
     Vector w(2);
     w[0] = 2.0; w[1] = 3.0;
-    
     Vector result2 = w * A;
-    bool test2 = TestEqual(result2.Read(0), 14.0) && TestEqual(result2.Read(1), 19.0) && 
+    bool test2 = TestEqual(result2.Read(0), 14.0) && TestEqual(result2.Read(1), 19.0) &&
                  TestEqual(result2.Read(2), 24.0);
     TestResult("Vector * Matrix", test2);
 }
 
 void TestDeterminant() {
     PrintSection("TESTING DETERMINANT CALCULATION");
-    
-    // Test 1x1 determinant
     Matrix A(1, 1);
     A(1, 1) = 7.0;
     double det1 = A.CalculateDeterminant();
     TestResult("1x1 determinant", TestEqual(det1, 7.0));
-    
-    // Test 2x2 determinant
     Matrix B(2, 2);
     B(1, 1) = 3.0; B(1, 2) = 4.0;
     B(2, 1) = 1.0; B(2, 2) = 2.0;
     double det2 = B.CalculateDeterminant();
-    TestResult("2x2 determinant", TestEqual(det2, 2.0)); // 3*2 - 4*1 = 2
-    
-    // Test 3x3 determinant (identity matrix)
+    TestResult("2x2 determinant", TestEqual(det2, 2.0));
     Matrix C(3, 3);
     C(1, 1) = 1.0; C(1, 2) = 0.0; C(1, 3) = 0.0;
     C(2, 1) = 0.0; C(2, 2) = 1.0; C(2, 3) = 0.0;
     C(3, 1) = 0.0; C(3, 2) = 0.0; C(3, 3) = 1.0;
     double det3 = C.CalculateDeterminant();
     TestResult("3x3 identity determinant", TestEqual(det3, 1.0));
-    
-    // Test 3x3 determinant (zero determinant)
     Matrix D(3, 3);
     D(1, 1) = 1.0; D(1, 2) = 2.0; D(1, 3) = 3.0;
-    D(2, 1) = 2.0; D(2, 2) = 4.0; D(2, 3) = 6.0; // Second row is 2x first row
+    D(2, 1) = 2.0; D(2, 2) = 4.0; D(2, 3) = 6.0;
     D(3, 1) = 7.0; D(3, 2) = 8.0; D(3, 3) = 9.0;
     double det4 = D.CalculateDeterminant();
     TestResult("3x3 singular determinant", TestEqual(det4, 0.0));
@@ -221,26 +176,19 @@ void TestDeterminant() {
 
 void TestSpecialCases() {
     PrintSection("TESTING SPECIAL CASES AND EDGE CONDITIONS");
-    
-    // Test 1x1 matrix operations
     Matrix A(1, 1);
     A(1, 1) = 5.0;
     Matrix B(1, 1);
     B(1, 1) = 3.0;
     Matrix C = A + B;
     TestResult("1x1 matrix addition", TestEqual(C(1, 1), 8.0));
-    
-    // Test large matrix dimensions (just creation, not full testing)
     Matrix Large(10, 10);
     bool test1 = (Large.GetNumberOfRows() == 10) && (Large.GetNumberOfColumns() == 10);
     TestResult("Large matrix creation (10x10)", test1);
-    
-    // Test zero matrix operations
     Matrix Zero(2, 2);
     Matrix NonZero(2, 2);
     NonZero(1, 1) = 1.0; NonZero(1, 2) = 2.0;
     NonZero(2, 1) = 3.0; NonZero(2, 2) = 4.0;
-    
     Matrix Result = Zero + NonZero;
     bool test2 = TestEqual(Result(1, 1), 1.0) && TestEqual(Result(1, 2), 2.0) &&
                  TestEqual(Result(2, 1), 3.0) && TestEqual(Result(2, 2), 4.0);
@@ -252,7 +200,6 @@ void PrintSummary() {
     std::cout << "Total tests run: " << (testsPassed + testsFailed) << std::endl;
     std::cout << "Tests passed: " << testsPassed << std::endl;
     std::cout << "Tests failed: " << testsFailed << std::endl;
-    
     if (testsFailed == 0) {
         std::cout << std::endl << "🎉 ALL TESTS PASSED! Matrix class is working correctly." << std::endl;
     } else {
@@ -264,13 +211,11 @@ void PrintSummary() {
 int main() {
     std::cout << "Enhanced Matrix Class Test Suite" << std::endl;
     std::cout << "=================================" << std::endl;
-    
     TestConstructors();
     TestArithmeticOperations();
     TestMatrixVectorOperations();
     TestDeterminant();
     TestSpecialCases();
     PrintSummary();
-    
     return (testsFailed == 0) ? 0 : 1;
 }
